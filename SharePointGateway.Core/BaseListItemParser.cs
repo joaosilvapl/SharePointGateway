@@ -6,9 +6,9 @@ namespace SharePointGateway.Core
     {
         public abstract T Parse(RawListItemData input);
 
-        protected string GetFieldStringValue(RawListItemData input, string fieldInternalName)
+        protected string GetFieldStringValue(RawListItemData input, string fieldInternalName, string subFieldInternalName = null)
         {
-            return this.GetFieldValueOrDefault(input, fieldInternalName, x => x);
+            return this.GetFieldValueOrDefault(input, fieldInternalName, subFieldInternalName, x => x);
         }
 
         protected int GetFieldIntValue(RawListItemData input, string fieldInternalName)
@@ -25,7 +25,20 @@ namespace SharePointGateway.Core
         {
             var textValue = this.GetFieldValue(input, fieldInternalName);
 
-            if (string.IsNullOrWhiteSpace(textValue) || string.Compare(textValue, "null", StringComparison.InvariantCultureIgnoreCase) == 0)
+            return FieldValueOrDefault(textValue, convertFunction);
+        }
+
+        private TU GetFieldValueOrDefault<TU>(RawListItemData input, string fieldInternalName, string subFieldInternalName, Func<string, TU> convertFunction)
+        {
+            var textValue = this.GetFieldValue(input, fieldInternalName, subFieldInternalName);
+
+            return FieldValueOrDefault(textValue, convertFunction);
+        }
+
+        private static TU FieldValueOrDefault<TU>(string textValue, Func<string, TU> convertFunction)
+        {
+            if (string.IsNullOrWhiteSpace(textValue) ||
+                string.Compare(textValue, "null", StringComparison.InvariantCultureIgnoreCase) == 0)
             {
                 return default(TU);
             }
@@ -33,9 +46,9 @@ namespace SharePointGateway.Core
             return convertFunction(textValue);
         }
 
-        private string GetFieldValue(RawListItemData input, string fieldInternalName)
+        private string GetFieldValue(RawListItemData input, string fieldInternalName, string subFieldInternalName = null)
         {
-            var value = input.GetValue(fieldInternalName);
+            var value = input.GetValue(fieldInternalName, subFieldInternalName);
             return value?.ToString();
         }
     }

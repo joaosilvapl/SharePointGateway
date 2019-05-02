@@ -19,17 +19,18 @@ namespace SharePointGateway.TestApp
                 {
                     ListTitle = "MyList",
                     FilterQuery = "ID eq 12833 or ID eq 18912",
-                    SelectQuery = "Id,Title,TimeSpent,Modified",
+                    SelectQuery = "Id,Title,TimeSpent,Modified,AssignedTo/Name",
                     OrderBy = "Modified desc",
+                    Expand = "AssignedTo",
                     MaxResults = 2000,
                 },
                 NetworkCredentials = new NetworkCredential("userName", "password", "domain")
             };
 
-            var listItemParser = new BasicListItemParser();
+            var listItemParser = new ListItemParser();
 
             var listItemRetriever = new ListItemRetriever(new SharePointConnector());
-            var items = listItemRetriever.GetListItems<BasicListItemData>(dataSourceInfo, listItemParser).Result;
+            var items = listItemRetriever.GetListItems(dataSourceInfo, listItemParser).Result;
         }
     }
 }

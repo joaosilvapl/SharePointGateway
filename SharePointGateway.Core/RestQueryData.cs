@@ -7,5 +7,6 @@
         public string SelectQuery;
         public string OrderBy;
         public int MaxResults;
+        public string Expand;
     }
 }

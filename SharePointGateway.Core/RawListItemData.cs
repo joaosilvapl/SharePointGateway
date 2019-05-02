@@ -11,9 +11,11 @@ namespace SharePointGateway.Core
             _jToken = jToken;
         }
 
-        public object GetValue(string fieldName)
+        public object GetValue(string fieldName, string subFieldInternalName = null)
         {
-            return this._jToken[fieldName];
+            var value = this._jToken[fieldName];
+
+            return subFieldInternalName == null ? value : value?[subFieldInternalName];
         }
     }
 }
