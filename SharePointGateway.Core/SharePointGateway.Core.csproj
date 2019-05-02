@@ -53,6 +53,8 @@
     <Compile Include="ListItemRetriever.cs" />
     <Compile Include="OperationResult.cs" />
     <Compile Include="RawListItemData.cs" />
+    <Compile Include="RestQueryBuilder.cs" />
+    <Compile Include="RestQueryData.cs" />
     <Compile Include="SharePointConnector.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

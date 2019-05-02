@@ -12,8 +12,10 @@ namespace SharePointGateway.Core
         //TODO: add unit tests
         public OperationResult<RawListItemData> GetListItems(DataSourceInfo dataSourceInfo)
         {
+            var restQuery = new RestQueryBuilder().Build(dataSourceInfo.RestQueryData);
+
             var requestUri =
-            $"{dataSourceInfo.SiteUri}/_api/web/lists/GetByTitle('{dataSourceInfo.ListTitle}')/items?$filter={dataSourceInfo.FilterQuery}&$select={dataSourceInfo.SelectQuery}&$orderby={dataSourceInfo.OrderBy}&$top={dataSourceInfo.MaxResults}";
+            $"{dataSourceInfo.SiteUri}{restQuery}";
 
             var allItems = new List<RawListItemData>();
 
@@ -22,11 +24,14 @@ namespace SharePointGateway.Core
             {
                 var result = this.GetItems(dataSourceInfo.NetworkCredentials, requestUri);
 
-                allItems.AddRange(result.Result);
+                if (result.Result != null)
+                {
+                    allItems.AddRange(result.Result);
+                }
 
                 requestUri = result.NextRequestUri;
 
-                if (allItems.Count >= dataSourceInfo.MaxResults || string.IsNullOrWhiteSpace(requestUri))
+                if (allItems.Count >= dataSourceInfo.RestQueryData.MaxResults || string.IsNullOrWhiteSpace(requestUri))
                 {
                     break;
                 }
