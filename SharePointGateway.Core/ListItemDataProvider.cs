@@ -2,11 +2,11 @@
 
 namespace SharePointGateway.Core
 {
-    public class RawListItemData
+    public class ListItemDataProvider : IListItemDataProvider
     {
         private readonly JToken _jToken;
 
-        internal RawListItemData(JToken jToken)
+        internal ListItemDataProvider(JToken jToken)
         {
             _jToken = jToken;
         }

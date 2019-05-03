@@ -48,11 +48,12 @@
     <Compile Include="BasicListItemParser.cs" />
     <Compile Include="DataSourceInfo.cs" />
     <Compile Include="IListItemParser.cs" />
+    <Compile Include="IListItemDataProvider.cs" />
     <Compile Include="ISharePointConnector.cs" />
     <Compile Include="BaseListItemParser.cs" />
     <Compile Include="ListItemRetriever.cs" />
     <Compile Include="OperationResult.cs" />
-    <Compile Include="RawListItemData.cs" />
+    <Compile Include="ListItemDataProvider.cs" />
     <Compile Include="RestQueryBuilder.cs" />
     <Compile Include="RestQueryData.cs" />
     <Compile Include="SharePointConnector.cs" />

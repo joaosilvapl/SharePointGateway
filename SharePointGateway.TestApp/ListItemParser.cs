@@ -10,7 +10,7 @@ namespace SharePointGateway.TestApp
 
         private readonly BasicListItemParser _basicListItemParser = new BasicListItemParser();
         
-        public override ListItemData Parse(RawListItemData input)
+        public override ListItemData Parse(IListItemDataProvider input)
         {
             var basicData = this._basicListItemParser.Parse(input);
 

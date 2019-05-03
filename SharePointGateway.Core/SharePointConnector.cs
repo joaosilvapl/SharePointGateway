@@ -10,14 +10,14 @@ namespace SharePointGateway.Core
     public class SharePointConnector : ISharePointConnector
     {
         //TODO: add unit tests
-        public OperationResult<RawListItemData> GetListItems(DataSourceInfo dataSourceInfo)
+        public OperationResult<ListItemDataProvider> GetListItems(DataSourceInfo dataSourceInfo)
         {
             var restQuery = new RestQueryBuilder().Build(dataSourceInfo.RestQueryData);
 
             var requestUri =
             $"{dataSourceInfo.SiteUri}{restQuery}";
 
-            var allItems = new List<RawListItemData>();
+            var allItems = new List<ListItemDataProvider>();
 
             //Retrieves items in batches
             do
@@ -38,7 +38,7 @@ namespace SharePointGateway.Core
 
             } while (true);
 
-            return new OperationResult<RawListItemData> { Success = true, Result = allItems };
+            return new OperationResult<ListItemDataProvider> { Success = true, Result = allItems };
         }
 
         private GetListItemsOperationResult GetItems(NetworkCredential networkCredential, string requestUri)
@@ -66,7 +66,7 @@ namespace SharePointGateway.Core
                         JObject jobj = JObject.Parse(response);
                         JArray jarr = (JArray)jobj["d"]["results"];
 
-                        var rawListItems = jarr.Select(x => new RawListItemData(x));
+                        var rawListItems = jarr.Select(x => new ListItemDataProvider(x));
 
                         var result = new GetListItemsOperationResult
                         {
@@ -87,7 +87,7 @@ namespace SharePointGateway.Core
             }
         }
 
-        private class GetListItemsOperationResult : OperationResult<RawListItemData>
+        private class GetListItemsOperationResult : OperationResult<ListItemDataProvider>
         {
             public string NextRequestUri;
         }

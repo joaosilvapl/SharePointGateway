@@ -5,7 +5,7 @@
         private const string IdFieldInternalName = "Id";
         private const string TitleFieldInternalName = "Title";
 
-        public override BasicListItemData Parse(RawListItemData input)
+        public override BasicListItemData Parse(IListItemDataProvider input)
         {
             return new BasicListItemData
             {

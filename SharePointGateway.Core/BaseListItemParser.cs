@@ -4,31 +4,24 @@ namespace SharePointGateway.Core
 {
     public abstract class BaseListItemParser<T> : IListItemParser<T> where T:new()
     {
-        public abstract T Parse(RawListItemData input);
+        public abstract T Parse(IListItemDataProvider input);
 
-        protected string GetFieldStringValue(RawListItemData input, string fieldInternalName, string subFieldInternalName = null)
+        protected string GetFieldStringValue(IListItemDataProvider input, string fieldInternalName, string subFieldInternalName = null)
         {
             return this.GetFieldValueOrDefault(input, fieldInternalName, subFieldInternalName, x => x);
         }
 
-        protected int GetFieldIntValue(RawListItemData input, string fieldInternalName)
+        protected int GetFieldIntValue(IListItemDataProvider input, string fieldInternalName, string subFieldInternalName = null)
         {
-            return this.GetFieldValueOrDefault(input, fieldInternalName, int.Parse);
+            return this.GetFieldValueOrDefault(input, fieldInternalName, subFieldInternalName, int.Parse);
         }
 
-        protected double GetFieldDoubleValue(RawListItemData input, string fieldInternalName)
+        protected double GetFieldDoubleValue(IListItemDataProvider input, string fieldInternalName, string subFieldInternalName = null)
         {
-            return this.GetFieldValueOrDefault(input, fieldInternalName, double.Parse);
+            return this.GetFieldValueOrDefault(input, fieldInternalName, subFieldInternalName, double.Parse);
         }
 
-        private TU GetFieldValueOrDefault<TU>(RawListItemData input, string fieldInternalName, Func<string, TU> convertFunction)
-        {
-            var textValue = this.GetFieldValue(input, fieldInternalName);
-
-            return FieldValueOrDefault(textValue, convertFunction);
-        }
-
-        private TU GetFieldValueOrDefault<TU>(RawListItemData input, string fieldInternalName, string subFieldInternalName, Func<string, TU> convertFunction)
+        private TU GetFieldValueOrDefault<TU>(IListItemDataProvider input, string fieldInternalName, string subFieldInternalName, Func<string, TU> convertFunction)
         {
             var textValue = this.GetFieldValue(input, fieldInternalName, subFieldInternalName);
 
@@ -46,7 +39,7 @@ namespace SharePointGateway.Core
             return convertFunction(textValue);
         }
 
-        private string GetFieldValue(RawListItemData input, string fieldInternalName, string subFieldInternalName = null)
+        private string GetFieldValue(IListItemDataProvider input, string fieldInternalName, string subFieldInternalName = null)
         {
             var value = input.GetValue(fieldInternalName, subFieldInternalName);
             return value?.ToString();

@@ -31,7 +31,7 @@ namespace SharePointGateway.Core.Tests
             
             var fakeSharePointConnector = MockRepository.GenerateStub<ISharePointConnector>();
             fakeSharePointConnector.Stub(x => x.GetListItems(dataSourceInfo)).Return(
-                new OperationResult<RawListItemData> {Success = false, ErrorMessage = expectedErrorMessage});
+                new OperationResult<ListItemDataProvider> {Success = false, ErrorMessage = expectedErrorMessage});
 
             IListItemParser<object> fakeListItemParser = MockRepository.GenerateStub<IListItemParser<object>>();
 
@@ -49,23 +49,23 @@ namespace SharePointGateway.Core.Tests
         {
             DataSourceInfo dataSourceInfo = new DataSourceInfo();
 
-            RawListItemData fakeRawItem1 = new RawListItemData(null);
-            RawListItemData fakeRawItem2 = new RawListItemData(null);
-            var fakeRawItems = new List<RawListItemData>
+            ListItemDataProvider fakeItem1 = new ListItemDataProvider(null);
+            ListItemDataProvider fakeItem2 = new ListItemDataProvider(null);
+            var fakeRawItems = new List<ListItemDataProvider>
             {
-                fakeRawItem1,
-                fakeRawItem2
+                fakeItem1,
+                fakeItem2
             };
 
             var fakeSharePointConnector = MockRepository.GenerateStub<ISharePointConnector>();
             fakeSharePointConnector.Stub(x => x.GetListItems(dataSourceInfo)).Return(
-                new OperationResult<RawListItemData> { Success = true, Result = fakeRawItems});
+                new OperationResult<ListItemDataProvider> { Success = true, Result = fakeRawItems});
 
             IListItemParser<object> fakeListItemParser = MockRepository.GenerateStub<IListItemParser<object>>();
             object fakeListItem1 = new object();
             object fakeListItem2 = new object();
-            fakeListItemParser.Stub(x => x.Parse(fakeRawItem1)).Return(fakeListItem1);
-            fakeListItemParser.Stub(x => x.Parse(fakeRawItem2)).Return(fakeListItem2);
+            fakeListItemParser.Stub(x => x.Parse(fakeItem1)).Return(fakeListItem1);
+            fakeListItemParser.Stub(x => x.Parse(fakeItem2)).Return(fakeListItem2);
 
             var listItemRetriever = this.GetListItemRetriever(fakeSharePointConnector);
 
