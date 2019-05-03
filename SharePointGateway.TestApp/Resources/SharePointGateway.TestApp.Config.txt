@@ -1,0 +1,7 @@
+[mySiteUrl]
+MyListName
+ID eq 12833 or ID eq 18912
+Id,Title,TimeSpent,Modified,AssignedTo/Name
+Modified desc
+AssignedTo
+2000
