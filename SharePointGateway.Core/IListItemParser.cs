@@ -1,7 +1,7 @@
 ﻿namespace SharePointGateway.Core
 {
-    public interface IListItemParser<T> where T:new()
+    public interface IListItemParser<T>
     {
-        T Parse(IListItemDataProvider input);
+        T Parse(IListItemDataWrapper input);
     }
 }

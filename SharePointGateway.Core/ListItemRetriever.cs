@@ -12,7 +12,7 @@ namespace SharePointGateway.Core
             this._sharePointConnector = sharePointConnector;
         }
 
-        public OperationResult<T> GetListItems<T>(DataSourceInfo dataSourceInfo, IListItemParser<T> listItemParser) where T:new()
+        public OperationResult<T> GetListItems<T>(DataSourceInfo dataSourceInfo, IListItemParser<T> listItemParser)
         {
             if (dataSourceInfo == null) throw new ArgumentNullException(nameof(dataSourceInfo));
             if (listItemParser == null) throw new ArgumentNullException(nameof(listItemParser));

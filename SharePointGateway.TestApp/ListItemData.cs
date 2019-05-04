@@ -6,5 +6,7 @@ namespace SharePointGateway.TestApp
     {
         public string Modified;
         public string AssignedToName;
+        public double Estimate;
+        public double TimeSpent;
     }
 }

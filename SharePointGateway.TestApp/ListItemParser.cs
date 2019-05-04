@@ -2,15 +2,18 @@
 
 namespace SharePointGateway.TestApp
 {
-    class ListItemParser : BaseListItemParser<ListItemData>
+    class ListItemParser : IListItemParser<ListItemData>
     {
         private const string AssignedToFieldInternalName = "AssignedTo";
         private const string ModifiedFieldInternalName = "Modified";
         private const string NameFieldInternalName = "Name";
+        private const string EstimateFieldInternalName = "Estimate";
+        private const string TimeSpentFieldInternalName = "TimeSpent";
 
         private readonly BasicListItemParser _basicListItemParser = new BasicListItemParser();
         
-        public override ListItemData Parse(IListItemDataProvider input)
+
+        public ListItemData Parse(IListItemDataWrapper input)
         {
             var basicData = this._basicListItemParser.Parse(input);
 
@@ -18,8 +21,10 @@ namespace SharePointGateway.TestApp
             {
                 ListItemId = basicData.ListItemId,
                 Title = basicData.Title,
-                Modified = this.GetFieldStringValue(input, ModifiedFieldInternalName),
-                AssignedToName = this.GetFieldStringValue(input, AssignedToFieldInternalName, NameFieldInternalName)
+                Modified = input.GetValue<string>(ModifiedFieldInternalName),
+                AssignedToName = input.GetValue<string>(AssignedToFieldInternalName, NameFieldInternalName),
+                Estimate = input.GetValue<double>(EstimateFieldInternalName),
+                TimeSpent = input.GetValue<double>(TimeSpentFieldInternalName)
             };
         }
     }

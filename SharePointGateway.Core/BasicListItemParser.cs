@@ -1,16 +1,16 @@
 ﻿namespace SharePointGateway.Core
 {
-    public class BasicListItemParser : BaseListItemParser<BasicListItemData>
+    public class BasicListItemParser : IListItemParser<BasicListItemData>
     {
         private const string IdFieldInternalName = "Id";
         private const string TitleFieldInternalName = "Title";
 
-        public override BasicListItemData Parse(IListItemDataProvider input)
+        public BasicListItemData Parse(IListItemDataWrapper input)
         {
             return new BasicListItemData
             {
-                ListItemId = this.GetFieldIntValue(input, IdFieldInternalName),
-                Title = this.GetFieldStringValue(input, TitleFieldInternalName),
+                ListItemId = input.GetValue<int>(IdFieldInternalName),
+                Title = input.GetValue<string>(TitleFieldInternalName)
             };
         }
     }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using CredentialManagement;
 using SharePointGateway.Core;
 
@@ -20,7 +21,7 @@ namespace SharePointGateway.TestApp
             var listItemParser = new ListItemParser();
 
             var listItemRetriever = new ListItemRetriever(new SharePointConnector());
-            var items = listItemRetriever.GetListItems(dataSourceInfo, listItemParser).Result;
+            var items = listItemRetriever.GetListItems(dataSourceInfo, listItemParser).Result.ToList();
         }
 
         public static DataSourceInfo LoadConfig()

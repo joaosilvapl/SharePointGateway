@@ -1,9 +1,7 @@
-﻿using System.Collections.Generic;
-
-namespace SharePointGateway.Core
+﻿namespace SharePointGateway.Core
 {
     public interface ISharePointConnector
     {
-        OperationResult<ListItemDataProvider> GetListItems(DataSourceInfo dataSourceInfo);
+        OperationResult<ListItemDataWrapper> GetListItems(DataSourceInfo dataSourceInfo);
     }
 }

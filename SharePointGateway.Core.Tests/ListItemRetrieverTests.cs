@@ -31,7 +31,7 @@ namespace SharePointGateway.Core.Tests
             
             var fakeSharePointConnector = MockRepository.GenerateStub<ISharePointConnector>();
             fakeSharePointConnector.Stub(x => x.GetListItems(dataSourceInfo)).Return(
-                new OperationResult<ListItemDataProvider> {Success = false, ErrorMessage = expectedErrorMessage});
+                new OperationResult<ListItemDataWrapper> {Success = false, ErrorMessage = expectedErrorMessage});
 
             IListItemParser<object> fakeListItemParser = MockRepository.GenerateStub<IListItemParser<object>>();
 
@@ -49,9 +49,9 @@ namespace SharePointGateway.Core.Tests
         {
             DataSourceInfo dataSourceInfo = new DataSourceInfo();
 
-            ListItemDataProvider fakeItem1 = new ListItemDataProvider(null);
-            ListItemDataProvider fakeItem2 = new ListItemDataProvider(null);
-            var fakeRawItems = new List<ListItemDataProvider>
+            ListItemDataWrapper fakeItem1 = new ListItemDataWrapper(null);
+            ListItemDataWrapper fakeItem2 = new ListItemDataWrapper(null);
+            var fakeRawItems = new List<ListItemDataWrapper>
             {
                 fakeItem1,
                 fakeItem2
@@ -59,7 +59,7 @@ namespace SharePointGateway.Core.Tests
 
             var fakeSharePointConnector = MockRepository.GenerateStub<ISharePointConnector>();
             fakeSharePointConnector.Stub(x => x.GetListItems(dataSourceInfo)).Return(
-                new OperationResult<ListItemDataProvider> { Success = true, Result = fakeRawItems});
+                new OperationResult<ListItemDataWrapper> { Success = true, Result = fakeRawItems});
 
             IListItemParser<object> fakeListItemParser = MockRepository.GenerateStub<IListItemParser<object>>();
             object fakeListItem1 = new object();
